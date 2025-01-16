@@ -6,21 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/DBnomics-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/DBnomics-{{ version }}.tar.gz
   sha256: 02e6039d10860f9d7dc99cd45ffe548934d4e1d373445d1a00b12fb057a0a6ab
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pytest-runner
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - requests >=2.18.4
     - pandas >=0.21
     # check https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#export-runtime-requirements
@@ -32,6 +32,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://git.nomics.world/dbnomics/dbnomics-python-client
